@@ -1,0 +1,15 @@
+<Stack gap="xs" p="xs" align="stretch" justify="center" style={{ height: '100%' }}>
+  <ActionButton requestId="triggerwake" color="red" fullWidth leftSection={<Icon name="power" size={16} />}>
+    Wake Machine
+  </ActionButton>
+  {status.triggerwake?.ok === false && (
+    <Alert color="red" title="Failed to send WoL packet">
+      {data.triggerwake?.message || status.triggerwake?.error || status.triggerwake?.statusText || 'Request failed'}
+    </Alert>
+  )}
+  {status.triggerwake?.ok === true && (
+    <Alert color="green" title="Magic packet sent">
+      {data.triggerwake?.message || 'WoL packet sent to Machine.'}
+    </Alert>
+  )}
+</Stack>

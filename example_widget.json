@@ -1,0 +1,26 @@
+{
+  "$schema": "homarr-custom-widget-v2",
+  "name": "WOL Button",
+  "description": "Sends magic WoL packet to remote machine",
+  "sources": {
+    "default": {
+      "name": "WoL API",
+      "baseUrl": "https://example.com", #put your ip address and port number here
+      "auth": "none"
+    }
+  },
+  "requests": {
+    "triggerwake": {
+      "source": "default",
+      "kind": "action",
+      "method": "POST",
+      "path": "/wake",
+      "trigger": "manual",
+      "auth": "inherit",
+      "permission": "full",
+      "confirmation": "Wake up Mahcine?"
+    }
+  },
+  "options": {},
+  "template": "<Stack gap=\"xs\" p=\"xs\" align=\"stretch\" justify=\"center\" style={{ height: '100%' }}>\n  <ActionButton requestId=\"triggerwake\" color=\"red\" fullWidth leftSection={<Icon name=\"power\" size={16} />}>\n    Wake Machine\n  </ActionButton>\n  {status.triggerwake?.ok === false && (\n    <Alert color=\"red\" title=\"Failed to send WoL packet\">\n      {data.triggerwake?.message || status.triggerwake?.error || status.triggerwake?.statusText || 'Request failed'}\n    </Alert>\n  )}\n  {status.triggerwake?.ok === true && (\n    <Alert color=\"green\" title=\"Magic packet sent\">\n      {data.triggerwake?.message || 'WoL packet sent to Machine.'}\n    </Alert>\n  )}\n</Stack>"
+}
